@@ -1,10 +1,11 @@
 import time
 from xml.dom import minidom
+import xml.dom.minidom
 import json
-
 import xlsxwriter
-
 from xml.etree import ElementTree as ET
+from bs4 import BeautifulSoup
+
 
 # file = minidom.parse('data/data.xml')
 #
@@ -18,12 +19,10 @@ from xml.etree import ElementTree as ET
 # print(models.length)
 # print(models[0].attributes['Title'].value)
 
-import xml.dom.minidom
 
 
 workbook = xlsxwriter.Workbook('DataExport/Data.xlsx')
 worksheet = workbook.add_worksheet()
-
 
 # parse the XML file
 xml_doc = xml.dom.minidom.parse('data/data.xml')
@@ -62,38 +61,53 @@ def formatFile():
     worksheet.merge_range("EJ1:EL1")
     workbook.close()
 
-
-
 beginHeaderFile()
 listData = []
 
 
+#FUNCTION GET DATA USING BEAUTIFULSOUP
+
+with open('data/data.xml', 'r') as f:
+    data = f.read()
+
+bs_data = BeautifulSoup(data, 'xml')
+getElement = bs_data.find_all('Value')
+
+getlogin = bs_data.find('Prop', {"Name" : "LoginName"})
+
+print(len(getlogin))
+print(getlogin.getText)
+
+
+# for index in getElement:
+#     listData.append(index.text)
+
+# print(len(listData))
+# for j in listData:
+#     print(j)
 
 
 
 
 
-
-
-
-
-
-for index in packages:
-    element_1 = index.getElementsByTagName('Prop')
-    for i in element_1:
-        propLength = i.getElementsByTagName("Prop").length
-
-        if propLength == 88: continue
-        elif propLength == 0:
-            elementIndex = i.getElementsByTagName("Value").length
-            if elementIndex == 1:
-                # value = i.getElementsByTagName("Value")[0].childNodes[0].data
-                # if value is None: continue
-                # else: print(value)
-                print("AAA")
-            else:
-                for index in range(0, elementIndex - 1):
-                    print(i.getElementsByTagName("Value")[index].childNodes[0])
+# for index in packages:
+#     element_1 = index.getElementsByTagName('Prop')
+#     print(element_1.length)
+#     for i in element_1:
+#         propLength = i.getElementsByTagName("Prop").length
+#         if propLength == 88: continue
+#         elif propLength == 0:
+#             elementIndex = i.getElementsByTagName("Value").length
+#             print(elementIndex)
+#             if elementIndex == 1:
+#                 value = i.getElementsByTagName("Value")[0].childNodes[0].data
+#                 print(value)
+            #     # if value is None: continue
+            #     # else: print(value)
+            #     print("AAA")
+            # else:
+            #     for index in range(0, elementIndex - 1):
+            #         print(i.getElementsByTagName("Value")[index].childNodes[0])
 
         # else:
         #     print("aaa")
@@ -111,8 +125,8 @@ for index in packages:
         #     # listData.append(i.getElementsByTagName("Value")[0].childNodes[0].data)
 
 
-
-
+if __name__ == '__main__':
+    print("hello")
 
 
 
@@ -146,5 +160,5 @@ for index in packages:
             #print(getProp[0].attributes['Name'].value)
 
 
-    while True:
-        time.sleep(1)
+    # while True:
+    #     time.sleep(1)

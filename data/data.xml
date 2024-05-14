@@ -646,7 +646,7 @@
 		<Value>PAPVN20</Value>
 	</Prop>
 	<Prop Name='LoginName' Type='String' Flags='0x0'>
-		<Value>KAV</Value>
+		<Value>ABC</Value>
 	</Prop>
 	<Prop Name='AdditionalData' Type='Obj' Flags='0x200000'>
 	</Prop>
